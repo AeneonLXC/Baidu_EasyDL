@@ -16,20 +16,22 @@
 
 项目分为图像分类以及图像检测两个板块
 
-```
+```python
 project
-│  baidu_api.py
-│  getdata.py
-│  img_deticion.py
-│  README.md
-│  基于百度EasyDL的仓储物流识别技术文档V1.0-李兴鑫.docx
+│  baidu_api.py 									#封装好的百度API实例
+│  getdata.py									    #数据清洗（伪）
+│  img_deticion.py									#视频流的图像分类
+│  README.md									    #说明文档
+│  基于百度EasyDL的仓储物流识别技术文档V1.0-李星辰.docx  #技术文档
 ```
-
-
 
 # 三、项目环境
 
 
 
-
+|    Software    | Version | Hardware | Version |
+| :------------: | :-----: | :------: | :-----: |
+|     Python     | 3.7.10  |          |         |
+| 百度EasyDL平台 |         |          |         |
+|                |         |          |         |
 

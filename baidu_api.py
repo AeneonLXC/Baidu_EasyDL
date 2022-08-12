@@ -77,6 +77,7 @@ class BaiduApi:
         response_json = response.json()
         response_str = json.dumps(response_json, indent=4, ensure_ascii=False)
         print("结果:{}".format(response_str))
+        return response_str
         
     def camera_video_deticion(self,img_bytes):
         # 目标图片的 本地文件路径，支持jpg/png/bmp格式
@@ -104,6 +105,7 @@ class BaiduApi:
         response_json = response.json()
         response_str = json.dumps(response_json, indent=4, ensure_ascii=False)
         print("结果:{}".format(response_str))
+        return response_json
         
 if __name__ == "__main__":
     PARAMS = {"top_num": 3}
