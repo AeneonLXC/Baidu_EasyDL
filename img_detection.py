@@ -7,9 +7,9 @@ Created on Fri Aug 12 22:11:01 2022
  
 # ----------------------------------------------
 #
-#               图像分类代码示例
+#               img_detecion
 #               Coding By lxc
-#                  基于EasyDL
+#                  图像分类
 #
 #          LAST_UPDATE: Fri Aug 12 22:11:01 2022
 #

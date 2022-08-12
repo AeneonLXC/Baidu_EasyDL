@@ -9,7 +9,7 @@ Created on Fri Aug 12 18:39:52 2022
 #
 #                   baidu_api
 #               Coding By lxc
-#            部署模型示例，可支持图片、视频流检测
+#           部署模型示例，可支持图片、视频流检测
 #
 #
 #          LAST_UPDATE: Fri Aug 12 18:39:52 2022
