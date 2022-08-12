@@ -42,6 +42,7 @@ if __name__ == "__main__":
     
     img_path = "E:/MysteriousKnight/github_repository/VOC2007/Image/mvi_4531_000008.jpg"
     
+    #   接口返回的数据类型
     response_str = {'log_id': 0,
      'results': [{'name': 'NULL', 'score': 0.0},
       {'name': 'NULL', 'score': 0.0},
@@ -49,12 +50,12 @@ if __name__ == "__main__":
     
     while 1:
         _, src = cap.read()
-
         frame = cv.resize(src, (640,360))
         
-        # cv.imshow("hsv", hsv)
         if cv.waitKey(12) & 0xFF == ord('d'):
+            #   图片需要转码菜才能实现网络传输
             imgbytes = cv.imencode('.jpg', frame)[1]
+            #   调用api进行训练
             response_str = app.camera_video_deticion(imgbytes)
             
         if cv.waitKey(12) & 0xFF == ord('q'):
