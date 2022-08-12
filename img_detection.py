@@ -43,9 +43,9 @@ if __name__ == "__main__":
     img_path = "E:/MysteriousKnight/github_repository/VOC2007/Image/mvi_4531_000008.jpg"
     
     response_str = {'log_id': 0,
-     'results': [{'name': 'forklift', 'score': 0.0},
-      {'name': 'cargo', 'score': 0.0},
-      {'name': 'tray', 'score': 0.0}]}
+     'results': [{'name': 'NULL', 'score': 0.0},
+      {'name': 'NULL', 'score': 0.0},
+      {'name': 'NULL', 'score': 0.0}]}
     
     while 1:
         _, src = cap.read()
