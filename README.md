@@ -10,13 +10,20 @@
 
 基于仓储物流识别的人工智能挑战项目，本仓库仅仅有训练代码及相关文档，不包含项目本身的所有程序。
 
-![image-20220812175456685](README.assets/image-20220812175456685.png)
 
-
-
-![image-20220812175558903](README.assets/image-20220812175558903.png)
 
 # 二、项目结构
+
+项目分为图像分类以及图像检测两个板块
+
+```
+project
+│  baidu_api.py
+│  getdata.py
+│  img_deticion.py
+│  README.md
+│  基于百度EasyDL的仓储物流识别技术文档V1.0-李兴鑫.docx
+```
 
 
 
