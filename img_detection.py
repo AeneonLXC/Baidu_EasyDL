@@ -29,6 +29,7 @@ _, src = cap.read()
 if __name__ == "__main__":
     #   模型配置
     PARAMS = {"top_num": 3}
+    #   读取本地的private key
     key = pd.read_excel(r"E:\MysteriousKnight\github_repository\VOC2007\apiKey.xls")
     key = np.array(key)
     MODEL_API_URL = key[0,1]
