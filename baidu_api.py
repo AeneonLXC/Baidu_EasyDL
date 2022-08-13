@@ -104,7 +104,8 @@ class BaiduApi:
         response_json = response.json()
         response_str = json.dumps(response_json, indent=4, ensure_ascii=False)
         print("结果:{}".format(response_str))
-        return response_json
+        response_dict = eval(response_str)
+        return response_dict
         
 # if __name__ == "__main__":
 #     PARAMS = {"top_num": 3}
