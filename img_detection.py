@@ -2,7 +2,7 @@
 """
 Created on Sat Aug 13 08:21:07 2022
 
-@TwinkelStar: 一直闪闪发光的李星辰
+@TwinkelStar: 李星辰
 @Email: xingchenziyi@163.com   
  
 # ----------------------------------------------
@@ -11,7 +11,7 @@ Created on Sat Aug 13 08:21:07 2022
 #               Coding By lxc
 #                  图像检测
 #
-#          LAST_UPDATE: Sat Aug 13 08:21:07 2022
+#      LAST_UPDATE: Sat Aug 13 08:21:07 2022
 #
 # ----------------------------------------------
 
@@ -80,9 +80,9 @@ if __name__ == "__main__":
         
         if 1==1:
             if cv.waitKey(12) & 0xFF == ord('d'):
-                #   图片需要转码菜才能实现网络传输
+                #   图片需要转码才能实现网络传输
                 imgbytes = cv.imencode('.jpg', frame)[1]
-                #   调用api进行训练
+                #   调用api进行检测
                 response_dict = app.camera_video_deticion(imgbytes)
                 img_confirm(response_dict,frame)
             

@@ -2,7 +2,7 @@
 """
 Created on Fri Aug 12 16:07:52 2022
 
-@TwinkelStar: 一直闪闪发光的李星辰
+@TwinkelStar: 李星辰
 @Email: xingchenziyi@163.com   
  
 # ----------------------------------------------
