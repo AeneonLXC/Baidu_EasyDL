@@ -75,7 +75,7 @@ if __name__ == "__main__":
     cap = cv.VideoCapture(0)
     _, src = cap.read()
     
-    #计数器
+    #   计数器
     count = 0
     while 1:
         _, src = cap.read()
@@ -88,7 +88,7 @@ if __name__ == "__main__":
                 #   调用api进行检测
                 response_dict = app.camera_video_deticion(imgbytes)
                 img_confirm(response_dict,frame)
-                #保存结果
+                #   保存结果
                 cv.imwrite("./output/detection"+ str(count) + ".jpg", frame)
                 count += 1
         if cv.waitKey(60) & 0xFF == ord('q'):
