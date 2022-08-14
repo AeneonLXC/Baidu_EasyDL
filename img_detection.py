@@ -89,7 +89,7 @@ if __name__ == "__main__":
                 response_dict = app.camera_video_deticion(imgbytes)
                 img_confirm(response_dict,frame)
                 #   保存结果
-                cv.imwrite("./output/detection"+ str(count) + ".jpg", frame)
+                cv.imwrite("../output/detection"+ str(count) + ".jpg", frame)
                 count += 1
         if cv.waitKey(60) & 0xFF == ord('q'):
             break

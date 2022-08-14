@@ -65,7 +65,7 @@ if __name__ == "__main__":
             cv.putText(frame, str(response_str["results"][0]["score"]), (50,70), 
                         cv.FONT_HERSHEY_SIMPLEX, 0.75, (125, 25, 125), 2)
             #   保存结果
-            cv.imwrite("./output/classfi"+ str(count) + ".jpg", frame)
+            cv.imwrite("../output/classfi"+ str(count) + ".jpg", frame)
             count += 1
             
             
