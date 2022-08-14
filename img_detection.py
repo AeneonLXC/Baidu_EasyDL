@@ -22,9 +22,6 @@ import pandas as pd
 import base64
 import time
 from baidu_api import BaiduApi
-# cap = cv.VideoCapture("E:/MysteriousKnight/keil51/vision_car/resp_ke51_car/car.mp4")
-cap = cv.VideoCapture(0)
-_, src = cap.read()
 
 def img_confirm(response_dict, img):
     """
@@ -54,7 +51,7 @@ def img_confirm(response_dict, img):
                        
                        cv.putText(img, str(name), (left, top), 
                                     cv.FONT_HERSHEY_SIMPLEX, 0.75, (20, 125, 80), 2)
-                       cv.putText(img, str(score), (left + 50, top), 
+                       cv.putText(img, str(score) + "%", (left + 70, top), 
                                     cv.FONT_HERSHEY_SIMPLEX, 0.75, (125, 25, 125), 2)
 
 if __name__ == "__main__":
@@ -74,6 +71,12 @@ if __name__ == "__main__":
     
     img_path = "E:/MysteriousKnight/github_repository/VOC2007/Image/mvi_4531_000008.jpg"
     
+    # cap = cv.VideoCapture("E:/MysteriousKnight/keil51/vision_car/resp_ke51_car/car.mp4")
+    cap = cv.VideoCapture(0)
+    _, src = cap.read()
+    
+    #计数器
+    count = 0
     while 1:
         _, src = cap.read()
         frame = cv.resize(src, (640,360))
@@ -85,7 +88,9 @@ if __name__ == "__main__":
                 #   调用api进行检测
                 response_dict = app.camera_video_deticion(imgbytes)
                 img_confirm(response_dict,frame)
-            
+                #保存结果
+                cv.imwrite("./output/detection"+ str(count) + ".jpg", frame)
+                count += 1
         if cv.waitKey(60) & 0xFF == ord('q'):
             break
         cv.imshow("frame", frame)

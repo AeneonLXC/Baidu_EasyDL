@@ -21,8 +21,8 @@ import cv2 as cv
 import pandas as pd
 import base64
 from baidu_api import BaiduApi
-cap = cv.VideoCapture("E:/MysteriousKnight/keil51/vision_car/resp_ke51_car/car.mp4")
-# cap = cv.VideoCapture(0)
+# cap = cv.VideoCapture("E:/MysteriousKnight/keil51/vision_car/resp_ke51_car/car.mp4")
+cap = cv.VideoCapture(0)
 _, src = cap.read()
 
 if __name__ == "__main__":
@@ -48,6 +48,9 @@ if __name__ == "__main__":
       {'name': 'NULL', 'score': 0.0},
       {'name': 'NULL', 'score': 0.0}]}
     
+    #计数器
+    count = 0
+    
     while 1:
         _, src = cap.read()
         frame = cv.resize(src, (640,360))
@@ -57,6 +60,14 @@ if __name__ == "__main__":
             imgbytes = cv.imencode('.jpg', frame)[1]
             #   调用api进行训练
             response_str = app.camera_video_deticion(imgbytes)
+            cv.putText(frame, str("detection object:" + response_str["results"][0]["name"]), (50,30), 
+                        cv.FONT_HERSHEY_SIMPLEX, 0.75, (20, 125, 80), 2)
+            cv.putText(frame, str(response_str["results"][0]["score"]), (50,70), 
+                        cv.FONT_HERSHEY_SIMPLEX, 0.75, (125, 25, 125), 2)
+            #保存结果
+            cv.imwrite("./output/classfi"+ str(count) + ".jpg", frame)
+            count += 1
+            
             
         if cv.waitKey(12) & 0xFF == ord('q'):
             break
@@ -65,6 +76,8 @@ if __name__ == "__main__":
                     cv.FONT_HERSHEY_SIMPLEX, 0.75, (20, 125, 80), 2)
         cv.putText(frame, str(response_str["results"][0]["score"]), (50,70), 
                     cv.FONT_HERSHEY_SIMPLEX, 0.75, (125, 25, 125), 2)
+        
+        
         cv.imshow("frame", frame)
         
     cv.waitKey(0)
