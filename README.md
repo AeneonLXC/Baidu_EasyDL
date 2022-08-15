@@ -48,13 +48,16 @@ project
 
 |    Software    |     Version      |    Hardware     | Version |
 | :------------: | :--------------: | :-------------: | :-----: |
-|     Python     |      3.7.10      | GeForce RTX3080 | 七彩虹  |
+|     Ubuntu     |      18.04       | GeForce RTX3080 | 七彩虹  |
+|    Windows     |        10        |                 |         |
+|     Python     |      3.7.10      |                 |         |
 | 百度EasyDL平台 |    2022.08.12    |                 |         |
 |      cuda      | 11.3.0_465_19_01 |                 |         |
 |     cudnn      |    8.2.0.53-1    |                 |         |
-|     Torch      |      1.12.1      |                 |         |
+|    pytorch     |      1.12.1      |                 |         |
 |  torchvision   |      0.13.1      |                 |         |
 |   torchaudio   |      0.12.1      |                 |         |
 | tensorflow-gpu |      2.7.0       |                 |         |
+|                |                  |                 |         |
 |                |                  |                 |         |
 
