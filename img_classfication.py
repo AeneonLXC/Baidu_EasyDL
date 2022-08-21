@@ -56,7 +56,7 @@ if __name__ == "__main__":
         frame = cv.resize(src, (640,360))
         
         if cv.waitKey(12) & 0xFF == ord('d'):
-            #   图片需要转码菜才能实现网络传输
+            #   图片需要转码才能实现网络传输
             imgbytes = cv.imencode('.jpg', frame)[1]
             #   调用api进行训练
             response_str = app.camera_video_deticion(imgbytes)
