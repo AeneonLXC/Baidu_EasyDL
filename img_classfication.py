@@ -63,16 +63,16 @@ if __name__ == "__main__":
     
     while 1:
         _, src = cap.read()
-        frame = cv.resize(src, (640,360))
+        frame = cv.resize(src, (1280,640))
         
         if cv.waitKey(12) & 0xFF == ord('d'):
             #   图片需要转码才能实现网络传输
             imgbytes = cv.imencode('.jpg', frame)[1]
             #   调用api进行训练
             response_str = app.camera_video_deticion(imgbytes)
-            cv.putText(frame, str("detection object:" + response_str["results"][0]["name"]), (50,30), 
+            cv.putText(frame, str("detection object:" + response_str["results"][0]["name"]), (50,130), 
                         cv.FONT_HERSHEY_SIMPLEX, 0.75, (20, 125, 80), 2)
-            cv.putText(frame, str(response_str["results"][0]["score"]), (50,70), 
+            cv.putText(frame, str(response_str["results"][0]["score"]), (50,170), 
                         cv.FONT_HERSHEY_SIMPLEX, 0.75, (125, 25, 125), 2)
             #   保存结果
             cv.imwrite("../output/classfi"+ str(count) + ".jpg", frame)
@@ -82,9 +82,9 @@ if __name__ == "__main__":
         if cv.waitKey(12) & 0xFF == ord('q'):
             break
         
-        cv.putText(frame, str("detection object:" + response_str["results"][0]["name"]), (50,30), 
+        cv.putText(frame, str("detection object:" + response_str["results"][0]["name"]), (50,130), 
                     cv.FONT_HERSHEY_SIMPLEX, 0.75, (20, 125, 80), 2)
-        cv.putText(frame, str(response_str["results"][0]["score"]), (50,70), 
+        cv.putText(frame, str(response_str["results"][0]["score"]), (50,170), 
                     cv.FONT_HERSHEY_SIMPLEX, 0.75, (125, 25, 125), 2)
         
         
