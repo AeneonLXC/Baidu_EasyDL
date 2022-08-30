@@ -1,0 +1,178 @@
+C51 COMPILER V9.54   MAIN                                                                  08/30/2022 16:58:29 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\output\main.obj
+COMPILER INVOKED BY: E:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) TABS(2) OBJECT(.\output\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Delay.h"
+   3          #include "Key.h"
+   4          #include "Nixie.h"
+   5          #include "Timer0.h"
+   6          #include "UART.h"
+   7          sbit MotorL=P1^7;
+   8          sbit L_LN4=P1^6;
+   9          sbit L_LN3=P1^5;
+  10          
+  11          sbit MotorR=P1^0;
+  12          sbit R_LN1=P1^1;
+  13          sbit R_LN2=P1^2;
+  14          
+  15          unsigned char Counter,Compare;  //计数值和比较值，用于输出PWM
+  16          unsigned char KeyNum,Speed;
+  17          unsigned char Brain; //指令器
+  18          
+  19          void control(unsigned char msg){
+  20   1        unsigned char WARD = 0X0A;//前进
+  21   1        unsigned char BACK = 0XFF;//后退
+  22   1        
+  23   1        unsigned char LEFT = 0XEF;//左转
+  24   1        unsigned char RIGHT = 0XFE;//右转
+  25   1      
+  26   1        unsigned char STOP = 0XFD;// 停止
+  27   1        
+  28   1      //  unsigned char WARD = 61;//前进
+  29   1      //  unsigned char BACK = 62;//后退
+  30   1      //  
+  31   1      //  unsigned char LEFT = 63;//左转
+  32   1      //  unsigned char RIGHT = 64;//右转
+  33   1      
+  34   1      //  unsigned char STOP = 65;// 停止
+  35   1      
+  36   1        Compare=50;
+  37   1        if(msg==WARD)
+  38   1          {
+  39   2      //      Speed++;                                                 
+  40   2      //      Speed%=4;
+  41   2      //      if(Speed==0){Compare=0;}  //设置比较值，改变PWM占空比
+  42   2      //      if(Speed==1){Compare=50;}
+  43   2      //      if(Speed==2){Compare=75;}
+  44   2      //      if(Speed==3){Compare=100;}
+  45   2            Brain=1;
+  46   2          }
+  47   1          else if(msg==BACK){
+  48   2            Brain=2;
+  49   2          }
+  50   1          else if(msg==LEFT){
+  51   2            Brain=3;
+  52   2          }
+  53   1          else if(msg==RIGHT){
+  54   2            Brain=4;
+C51 COMPILER V9.54   MAIN                                                                  08/30/2022 16:58:29 PAGE 2   
+
+  55   2          }
+  56   1          else if(msg==STOP){
+  57   2            Brain=0;
+  58   2          }
+  59   1      //    else{
+  60   1      //    Brain=1;
+  61   1      //    }
+  62   1      
+  63   1      }
+  64          void main()
+  65          {
+  66   1        UART_Init();    //串口初始化
+  67   1        Timer0_Init();
+  68   1      
+  69   1        
+  70   1        while(1)
+  71   1        {
+  72   2          KeyNum=Key();
+  73   2      //    if(KeyNum == 1){
+  74   2      //      control(SBUF);
+  75   2      //    }
+  76   2          control(SBUF);
+  77   2          
+  78   2      
+  79   2          
+  80   2      //    Nixie(1,Speed);
+  81   2        }
+  82   1      }
+  83          
+  84          void Timer0_Routine() interrupt 1
+  85          {
+  86   1        TL0 = 0x9C;   //设置定时初值
+  87   1        TH0 = 0xFF;   //设置定时初值
+  88   1        Counter++;
+  89   1        Counter%=100; //计数值变化范围限制在0~99
+  90   1        if(Counter<Compare) //计数值小于比较值
+  91   1        {
+  92   2          if(Brain==1)  //计数值小于比较值
+  93   2        {
+  94   3          MotorL=1;   //前进
+  95   3          MotorR=1; 
+  96   3          L_LN4=0;
+  97   3          L_LN3=1;
+  98   3          R_LN1=0;
+  99   3          R_LN2=1;
+ 100   3      
+ 101   3        }
+ 102   2        else if(Brain==2){
+ 103   3          MotorL=1;   //后退
+ 104   3          MotorR=1; 
+ 105   3          L_LN4=1;
+ 106   3          L_LN3=0;
+ 107   3          R_LN1=1;
+ 108   3          R_LN2=0;
+ 109   3        }
+ 110   2          else if(Brain==3){
+ 111   3          MotorL=1;   //左转
+ 112   3          MotorR=1; 
+ 113   3          L_LN4=0;
+ 114   3          L_LN3=0;
+ 115   3          R_LN1=1;
+ 116   3          R_LN2=0;
+C51 COMPILER V9.54   MAIN                                                                  08/30/2022 16:58:29 PAGE 3   
+
+ 117   3        }
+ 118   2          else if(Brain==4){
+ 119   3          MotorL=1;   //右转
+ 120   3          MotorR=1; 
+ 121   3          L_LN4=1;
+ 122   3          L_LN3=0;
+ 123   3          R_LN1=0;
+ 124   3          R_LN2=0;
+ 125   3        }
+ 126   2          else if(Brain==0){
+ 127   3          MotorL=0;   //停止
+ 128   3          MotorR=0; 
+ 129   3          L_LN4=0;
+ 130   3          L_LN3=0;
+ 131   3          R_LN1=0;
+ 132   3          R_LN2=0;
+ 133   3        }
+ 134   2      }
+ 135   1        else{
+ 136   2          MotorL=0;   //停止
+ 137   2          MotorR=0; 
+ 138   2        }
+ 139   1        
+ 140   1      }
+ 141          void UART_Routine() interrupt 4
+ 142          {
+ 143   1        if(RI==1)         //如果接收标志位为1，接收到了数据
+ 144   1        {
+ 145   2          P2=SBUF;        //读取数据
+ 146   2          UART_SendByte(SBUF);  //将受到的数据发回串口
+ 147   2          RI=0;         //接收标志位清0
+ 148   2          
+ 149   2        }
+ 150   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    261    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      5    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

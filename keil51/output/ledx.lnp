@@ -1,0 +1,8 @@
+".\output\main.obj",
+".\output\Delay.obj",
+".\output\Key.obj",
+".\output\Nixie.obj",
+".\output\Timer0.obj",
+".\output\UART.obj" 
+TO ".\output\ledx" 
+PRINT(".\Listings\ledx.m51") RAMSIZE(256) 
