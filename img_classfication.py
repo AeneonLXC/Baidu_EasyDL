@@ -32,7 +32,7 @@ k51 = Serial_Tool(port,bps,timex)
 ser = k51.setSerial()
 
 # cap = cv.VideoCapture("E:/MysteriousKnight/keil51/vision_car/resp_ke51_car/car.mp4")
-cap = cv.VideoCapture(0)
+cap = cv.VideoCapture("rtsp://admin:123456789...@169.254.38.154/h264/ch1/main/av_stream")
 _, src = cap.read()
 
 if __name__ == "__main__":
