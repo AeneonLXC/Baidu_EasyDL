@@ -22,6 +22,16 @@ import pandas as pd
 import base64
 import time
 from baidu_api import BaiduApi
+from SerialTool import Serial_Tool
+
+#串口配置 
+port = "com4" #设置串口端口
+bps = 4800 #设置波特率
+timex = 1 #设置
+
+k51 = Serial_Tool(port,bps,timex)
+ser = k51.setSerial()
+
 
 def img_confirm(response_dict, img):
     """
@@ -39,6 +49,8 @@ def img_confirm(response_dict, img):
 
     """
     #   判断检测列表是否为空
+    leftx = img.shape[0]/2 / 2
+    widthx = img.shape[0]/2 / 2
     if len(response_dict["results"]) != 0:
         for i in range(len(response_dict["results"])):
                        name = response_dict["results"][i]["name"]
@@ -53,7 +65,25 @@ def img_confirm(response_dict, img):
                                     cv.FONT_HERSHEY_SIMPLEX, 0.75, (20, 125, 80), 2)
                        cv.putText(img, str(score) + "%", (left + 70, top), 
                                     cv.FONT_HERSHEY_SIMPLEX, 0.75, (125, 25, 125), 2)
-
+                       leftx = left
+                       widthx = width
+    return leftx +  widthx/2
+def control(point,img):
+    
+    if point <= img.shape[0]/2 - 100:
+        k51.sendSerial(ser, 3)
+    elif point >= img.shape[0]/2 + 100:
+        k51.sendSerial(ser, 4)
+    elif point <= img.shape[0]/2 - 50:
+        k51.sendSerial(ser, 1)
+    elif point >= img.shape[0]/2 + 50:
+        k51.sendSerial(ser, 2)
+    elif point >= img.shape[0]/2 + 30 or point <= img.shape[0]/2 - 30:
+        k51.sendSerial(ser, 5)
+    else:
+        k51.sendSerial(ser, 5)
+        
+    
 if __name__ == "__main__":
     #   模型配置
     PARAMS = {"top_num": 6}
@@ -72,26 +102,28 @@ if __name__ == "__main__":
     img_path = "E:/MysteriousKnight/github_repository/VOC2007/Image/mvi_4531_000008.jpg"
     
     # cap = cv.VideoCapture("E:/MysteriousKnight/keil51/vision_car/resp_ke51_car/car.mp4")
-    cap = cv.VideoCapture(0)
+    cap = cv.VideoCapture("rtsp://admin:123456789...@169.254.38.154/h264/ch1/main/av_stream")
     _, src = cap.read()
     
     #   计数器
     count = 0
     while 1:
         _, src = cap.read()
-        frame = cv.resize(src, (640,360))
+        frame = cv.resize(src, (1280,640))
         
-        if 1==1:
-            if cv.waitKey(12) & 0xFF == ord('d'):
-                #   图片需要转码才能实现网络传输
-                imgbytes = cv.imencode('.jpg', frame)[1]
-                #   调用api进行检测
-                response_dict = app.camera_video_deticion(imgbytes)
-                img_confirm(response_dict,frame)
-                #   保存结果
-                cv.imwrite("../output/detection"+ str(count) + ".jpg", frame)
-                count += 1
-        if cv.waitKey(60) & 0xFF == ord('q'):
+        # if 1==1:
+        #     if cv.waitKey(1) & 0xFF == ord('d'):
+        #   图片需要转码才能实现网络传输
+        cv.waitKey(24)
+        imgbytes = cv.imencode('.jpg', frame)[1]
+        #   调用api进行检测
+        response_dict = app.camera_video_deticion(imgbytes)
+        pointx = img_confirm(response_dict,frame)
+        control(pointx,frame)
+        #   保存结果
+        cv.imwrite("../output/detection"+ str(count) + ".jpg", frame)
+        count += 1
+        if cv.waitKey(1) & 0xFF == ord('q'):
             break
         cv.imshow("frame", frame)
         

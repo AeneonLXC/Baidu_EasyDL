@@ -21,6 +21,16 @@ import cv2 as cv
 import pandas as pd
 import base64
 from baidu_api import BaiduApi
+from SerialTool import Serial_Tool
+
+#串口配置 
+port = "com4" #设置串口端口
+bps = 4800 #设置波特率
+timex = 1 #设置
+
+k51 = Serial_Tool(port,bps,timex)
+ser = k51.setSerial()
+
 # cap = cv.VideoCapture("E:/MysteriousKnight/keil51/vision_car/resp_ke51_car/car.mp4")
 cap = cv.VideoCapture(0)
 _, src = cap.read()
