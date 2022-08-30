@@ -82,7 +82,24 @@ def control(point,img):
         k51.sendSerial(ser, 5)
     else:
         k51.sendSerial(ser, 5)
-        
+      
+def getpos(event, x, y, flags, param):
+    if event == cv.EVENT_LBUTTONDOWN:
+        if x < 100 :
+            k51.sendSerial(ser, 1)
+            print(x)
+        if x > 100 and x < 200:
+            k51.sendSerial(ser, 2)
+            print(x)
+        if x > 200 and x < 300:
+            k51.sendSerial(ser, 3)
+            print(x)
+        if x > 300 and x < 400 :
+            k51.sendSerial(ser, 4)
+            print(x)
+        if x > 400 and x < 500 :
+            k51.sendSerial(ser, 5)
+            print(x)
     
 if __name__ == "__main__":
     #   模型配置
@@ -111,21 +128,28 @@ if __name__ == "__main__":
         _, src = cap.read()
         frame = cv.resize(src, (1280,640))
         
-        # if 1==1:
-        #     if cv.waitKey(1) & 0xFF == ord('d'):
-        #   图片需要转码才能实现网络传输
-        cv.waitKey(24)
-        imgbytes = cv.imencode('.jpg', frame)[1]
-        #   调用api进行检测
-        response_dict = app.camera_video_deticion(imgbytes)
-        pointx = img_confirm(response_dict,frame)
-        control(pointx,frame)
-        #   保存结果
-        cv.imwrite("../output/detection"+ str(count) + ".jpg", frame)
-        count += 1
+        if 1==1:
+            #鼠标控制显示区域 点击方框内的像素
+            cv.line(frame, (100,0), (100,100), (125, 25, 125),3)
+            cv.line(frame, (200,0), (200,100), (125, 25, 125),3)
+            cv.line(frame, (300,0), (300,100), (125, 25, 125),3)
+            cv.line(frame, (400,0), (400,100), (125, 25, 125),3)
+            cv.line(frame, (500,0), (500,100), (125, 25, 125),3)
+            cv.line(frame, (0,100), (500,100), (125, 25, 125),3)
+            if cv.waitKey(1) & 0xFF == ord('d'):
+          # 图片需要转码才能实现网络传输
+                imgbytes = cv.imencode('.jpg', frame)[1]
+                #   调用api进行检测
+                response_dict = app.camera_video_deticion(imgbytes)
+                pointx = img_confirm(response_dict,frame)
+                control(pointx,frame)
+                #   保存结果
+                cv.imwrite("../output/detection"+ str(count) + ".jpg", frame)
+                count += 1
         if cv.waitKey(1) & 0xFF == ord('q'):
             break
         cv.imshow("frame", frame)
+        cv.setMouseCallback("frame", getpos)
         
     cv.waitKey(0)
     cv.destroyAllWindows()
