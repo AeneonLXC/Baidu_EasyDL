@@ -147,6 +147,7 @@ if __name__ == "__main__":
                 cv.imwrite("../output/detection"+ str(count) + ".jpg", frame)
                 count += 1
         if cv.waitKey(1) & 0xFF == ord('q'):
+
             break
         cv.imshow("frame", frame)
         cv.setMouseCallback("frame", getpos)
